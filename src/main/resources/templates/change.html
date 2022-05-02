@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <title>学习使用</title>
+  <link rel="icon" href="/img/bitbug_favicon.ico">
+  <link rel="stylesheet" href="css/dmaku.css">
+</head>
+
+<body>
+<div id="app">
+  <div class="dowebok" id="dowebok">
+    <div class="form-container sign-in-container">
+      <form>
+        <h1>忘记密码</h1>
+        <span>请输入你的邮箱和要更改的密码</span>
+        <input v-model="email" name="email" type="email" placeholder="电子邮箱">
+        <input v-model="password" name="password" type="password" placeholder="密码">
+        <button type="button" @click="changePassword()">更改密码</button>
+        <button type="button" @click="returnIndex()">回到主页</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<p style="background:none;height: 5%;position: fixed;bottom: 0px;width: 100%;text-align: center;">
+  <img style="margin-top:5px;" src="/img/beian.png">
+  <a class="banquan" style="color:#000;" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=51012402000616" target="_blank">公安备案号51012402000616</a>丨
+  <a class="banquan" style="color:#000;" href="https://beian.miit.gov.cn/#/Integrated/index" target="_blank">蜀ICP备2021015086号-1</a>
+</p>
+
+</body>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/vue.min.js"></script>
+<script src="js/axios-0.18.0.js"></script>
+
+<script th:inline="javascript">
+
+  var app = new Vue({
+    el: "#app",
+    data: {
+      email: [[${email}]],
+      password: "",
+      code: [[${code}]]
+    },
+    methods: {
+      changePassword: function () {
+        axios.get("/changePassword?password=" + app.password + "&email=" + app.email + "&code=" + app.code).then(function (res) {
+          if (res.data.flag) {
+            alert(res.data.message)
+          } else {
+            alert(res.data.message)
+          }
+        })
+      },
+      returnIndex: function () {
+        location.href = "http://akokko.com"
+      }
+    }
+  })
+
+</script>
+
+</html>

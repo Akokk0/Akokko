@@ -1,0 +1,18 @@
+server:
+  port: 80
+spring:
+  application:
+    name: akokko
+  datasource:
+    url: jdbc:mysql://1.15.34.154:3306/user?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowMultiQueries=true&serverTimezone=UTC&AllowPublicKeyRetrieval=True
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  mail:
+    host: smtp.sina.com
+    username: zhminecraft@sina.com
+    password: 46d76352c66fd47d
+    protocol: smtp
+    default-encoding: UTF-8
+cookieDomain: akokko.com
+cookieMaxAge: -1

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <title>学习使用</title>
+  <link rel="icon" href="/img/bitbug_favicon.ico">
+  <link rel="stylesheet" href="css/dmaku.css">
+</head>
+
+<body>
+<div id="app">
+  <div class="dowebok" id="dowebok">
+    <div class="form-container sign-in-container">
+      <form>
+        <h1>忘记密码</h1>
+        <span>请输入你的ID和邮箱</span>
+        <input v-model="name" name="name" type="text" placeholder="ID">
+        <input v-model="email" name="email" type="email" placeholder="电子邮箱">
+        <button type="button" @click="retrievePassword()">找回密码</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<p style="background:none;height: 5%;position: fixed;bottom: 0px;width: 100%;text-align: center;">
+  <img style="margin-top:5px;" src="/img/beian.png">
+  <a class="banquan" style="color:#000;" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=51012402000616" target="_blank">公安备案号51012402000616</a>丨
+  <a class="banquan" style="color:#000;" href="https://beian.miit.gov.cn/#/Integrated/index" target="_blank">蜀ICP备2021015086号-1</a>
+</p>
+
+</body>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/vue.min.js"></script>
+<script src="js/axios-0.18.0.js"></script>
+
+<script th:inline="javascript">
+
+  var app = new Vue({
+    el: "#app",
+    data: {
+      name: "",
+      email: ""
+    },
+    methods: {
+      retrievePassword: function () {
+        alert("处理中，请稍等！")
+        axios.get("/retrievePassword?name=" + app.name + "&email=" + app.email).then(function (res) {
+          if (res.data.flag) {
+            alert(res.data.message)
+            this.$message(res.data.message)
+          } else {
+            alert("您的输入有误请重新输入")
+            this.$message("您的输入有误请重新输入")
+          }
+        })
+      }
+    }
+  })
+
+</script>
+
+</html>

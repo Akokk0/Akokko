@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>学习使用</title>
+    <link rel="icon" href="/img/bitbug_favicon.ico">
+    <link rel="stylesheet" href="css/dmaku.css">
+</head>
+
+<body>
+    <div id="app">
+        <div class="dowebok" id="dowebok">
+            <div class="form-container sign-up-container">
+                <form>
+                    <h1>注册</h1>
+                    <!--<span>或使用邮箱注册</span>-->
+                    <input v-model="name" type="text" placeholder="姓名">
+                    <input v-model="email" type="email" @blur="checkEmail()" placeholder="电子邮箱">
+                    <input v-model="password" type="password" placeholder="密码">
+                    <button type="button" @click="regist()">注册</button>
+                </form>
+            </div>
+            <div class="form-container sign-in-container">
+                <form>
+                    <h1>登录</h1>
+                    <!--<span>或使用您的帐号</span>-->
+                    <input v-model="email" name="email" type="email" placeholder="电子邮箱">
+                    <input v-model="password" type="password" placeholder="密码">
+                    <a href="#" @click="forgetPassword()">忘记密码？</a>
+                    <button type="button" @click="login">登录</button>
+                </form>
+            </div>
+            <div class="overlay-container">
+                <div class="overlay">
+                    <div class="overlay-panel overlay-left">
+                        <h1>已有帐号？</h1>
+                        <p>请使用您的帐号进行登录</p>
+                        <button class="ghost" id="signIn" @click="signIn()">登录</button>
+                    </div>
+                    <div class="overlay-panel overlay-right">
+                        <h1>没有帐号？</h1>
+                        <p>立即注册</p>
+                        <button class="ghost" id="signUp" @click="signUp()">注册</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p style="background:none;height: 5%;position: fixed;bottom: 0px;width: 100%;text-align: center;">
+        <img style="margin-top:5px;" src="/img/beian.png">
+        <a class="banquan" style="color:#000;" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=51012402000616" target="_blank">公安备案号51012402000616</a>丨
+        <a class="banquan" style="color:#000;" href="https://beian.miit.gov.cn/#/Integrated/index" target="_blank">蜀ICP备2021015086号-1</a>
+    </p>
+
+</body>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/vue.min.js"></script>
+<script src="js/axios-0.18.0.js"></script>
+
+<script th:inline="javascript">
+
+    var app = new Vue({
+        el: "#app",
+        data: {
+            name: "",
+            email: "",
+            password: ""
+        },
+        methods: {
+            signUp: function () {
+                var container = document.getElementById('dowebok')
+                container.classList.add('right-panel-active')
+            },
+            signIn: function () {
+                var container = document.getElementById('dowebok')
+                container.classList.remove('right-panel-active')
+            },
+            checkEmail: function () {
+                axios.get("/checkEmail?email=" + app.email).then(function (res) {
+                    if (res.data.flag) {
+                    } else {
+                        alert("查询邮箱失败！")
+                    }
+                })
+            },
+            regist: function () {
+                axios.get("/regist?name=" + app.name + "&email=" + app.email + "&password=" + app.password).then(function (res) {
+                    if (res.data.flag) {
+                        alert(res.data.message)
+                        location.href = "/index"
+                    } else {
+                        alert(res.data.message)
+                    }
+                })
+            },
+            login: function () {
+                alert("正在登陆请稍等...")
+                axios.get("/login?email=" + app.email + "&password=" + app.password).then(function (res) {
+                    if (res.data.flag) {
+                        location.href = "/index"
+                    } else {
+                        alert(res.data.message)
+                    }
+                })
+            },
+            forgetPassword: function () {
+                location.href = "/forget"
+            }
+        }
+    })
+
+</script>
+
+</html>
