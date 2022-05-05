@@ -3,7 +3,7 @@ package com.akokko.filter;
 public class UrlFilter {
 
     //所有需要传递令牌的地址
-    public static String filterPath="/assets/**,/css/**,/js/**,/font/**,/img/**,/login,/regist,/verify,/checkEmail,/forget,/retrievePassword,/changePassword,/forget,/change";
+    public static String filterPath="/assets/**,/css/**,/js/**,/fonts/**,/font-awesome-4.7.0/**,/img/**,/images/**,/packages/**,/plugins/**,/login,/regist,/verify,/checkEmail,/forget,/retrievePassword,/changePassword,/forget,/change,/back,/backlogin";
 
     public static boolean hasAuthorize(String url){
 

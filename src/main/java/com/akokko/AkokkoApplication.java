@@ -2,6 +2,7 @@ package com.akokko;
 
 import com.akokko.util.EmailUtil;
 import com.akokko.util.IdWorker;
+import com.akokko.util.IpAddrUtil;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -25,6 +26,11 @@ public class AkokkoApplication {
     @Bean
     public EmailUtil emailUtil() {
         return new EmailUtil();
+    }
+
+    @Bean
+    public IpAddrUtil ipAddrUtil() {
+        return new IpAddrUtil();
     }
 
 }

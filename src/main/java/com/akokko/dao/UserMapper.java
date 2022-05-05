@@ -17,4 +17,5 @@ public interface UserMapper extends Mapper<User> {
 
     @Update("update tb_user set password = #{password} where email = #{email} and code = #{code}")
     int changePassword(@Param("email") String email, @Param("password") String password, @Param("code") String code);
+
 }

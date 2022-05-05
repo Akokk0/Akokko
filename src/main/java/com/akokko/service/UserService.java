@@ -84,4 +84,12 @@ public class UserService {
             return true;
         }
     }
+
+    public int findUserCount() {
+
+        List list = userMapper.selectAll();
+        return list.size();
+
+    }
+
 }

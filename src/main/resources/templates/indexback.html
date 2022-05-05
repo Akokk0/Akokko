@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+
+    <title>Backend</title>
+    <link rel="shortcut icon" href="back/img/favicon.ico">
+
+    <!-- global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+    <link rel="stylesheet" href="back/css/bootstrap.min.css">
+    <link rel="stylesheet" href="back/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="back/css/font-icon-style.css">
+    <link rel="stylesheet" href="back/css/style.default.css" id="theme-stylesheet">
+
+    <!-- Core stylesheets -->
+    <link rel="stylesheet" href="back/css/ui-elements/card.css">
+    <link rel="stylesheet" href="back/css/style.css">
+</head>
+
+<body>
+
+<!--====================================================
+                         MAIN NAVBAR
+======================================================-->
+<header class="header">
+    <nav class="navbar navbar-expand-lg ">
+        <div class="search-box">
+            <button class="dismiss"><i class="icon-close"></i></button>
+            <form id="searchForm" action="#" role="search">
+                <input type="search" placeholder="Search Now" class="form-control">
+            </form>
+        </div>
+        <div class="container-fluid ">
+            <div class="navbar-holder d-flex align-items-center justify-content-between">
+                <div class="navbar-header">
+                    <a id="toggle-btn" href="#" class="menu-btn active">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+            <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+                <!-- Expand-->
+                <li class="nav-item d-flex align-items-center full_scr_exp"><a class="nav-link" href="#"><img src="back/img/expand.png" onclick="toggleFullScreen(document.body)" class="img-fluid" alt=""></a></li>
+
+                <nav id="sidebar-wrapper">
+                    <div class="sidebar-nav">
+                        <div class="tab" role="tabpanel">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="nav-item ">
+                                    <a class="nav-link active" href="#live" role="tab" data-toggle="tab"><i class="fa fa-globe"></i> Live</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#trend" role="tab" data-toggle="tab"><i class="fa fa-rocket"></i> Trending</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<!--====================================================
+                        PAGE CONTENT
+======================================================-->
+<div class="page-content d-flex align-items-stretch" id="app">
+
+    <!--***** SIDE NAVBAR *****-->
+    <nav class="side-navbar">
+        <!-- Sidebar Navidation Menus-->
+        <ul class="list-unstyled">
+            <li class="active"> <a><i class="icon-home"></i>Home</a></li>
+        </ul>
+    </nav>
+
+    <div class="content-inner">
+        <div class="row" id="report1">
+            <div class="col-sm-3">
+                <div class="card">
+                    <div class="card-block">
+                        <div class="text-left report1-cont">
+                            <h2 class="font-light m-b-0"><i class="ti-arrow-up text-success"></i>{{views}}</h2>
+                            <span class="text-muted">总访问量</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="card">
+                    <div class="card-block">
+                        <div class="text-left report1-cont">
+                            <h2 class="font-light m-b-0"><i class="ti-arrow-up text-danger"></i> {{userCount}}</h2>
+                            <span class="text-muted">总用户数</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" id="report3">
+            <div class="col-md-8">
+                <div class="card card-c2">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>IP</th>
+                            <th>时间</th>
+                            <th>序号</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="ip in ipData">
+                            <td>{{ip.ip}}</td>
+                            <td>{{ip.time}}</td>
+                            <td>{{ip.id}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- VUE -->
+<script src="js/vue.min.js"></script>
+<script src="js/axios-0.18.0.js"></script>
+
+<!--Global Javascript -->
+<script src="back/js/jquery.min.js"></script>
+<script src="back/js/popper/popper.min.js"></script>
+<script src="back/js/tether.min.js"></script>
+<script src="back/js/bootstrap.min.js"></script>
+<script src="back/js/jquery.cookie.js"></script>
+<script src="back/js/jquery.validate.min.js"></script>
+<script src="back/js/chart.min.js"></script>
+<script src="back/js/front.js"></script>
+
+<!--Core Javascript -->
+<script src="back/js/mychart.js"></script>
+</body>
+
+<script th:inline="javascript">
+
+    var app = new Vue({
+        el: "#app",
+        data: {
+            userCount: 0,
+            views: 0,
+            ipData:{}
+        },
+        created() {
+
+            axios.get("/statisticIp").then((res) => {
+
+                this.userCount = res.data.data.userCount;
+                this.ipData = res.data.data.list;
+                this.views = res.data.data.views;
+
+            })
+
+        }
+    })
+
+</script>
+
+</html>
